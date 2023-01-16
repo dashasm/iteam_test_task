@@ -84,7 +84,6 @@ export const HeaderContainer = styled(Flex)`
     grid-template-columns: 20% 1fr 8% 15% 20%;
 
     grid-gap: 15px;
-    padding: 0 80px;
   }
 `;
 
