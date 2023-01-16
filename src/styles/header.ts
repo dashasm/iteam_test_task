@@ -96,9 +96,9 @@ export const Logo = styled.img`
     height: 60px;
   }
 
-  @media (min-width: 1100px) {
-    margin: 15px;
-    width: 150px;
+  @media (max-width: 1100px) and (min-width: 655px) {
+    width: 100%;
+    height: 100%;
   }
 `;
 
