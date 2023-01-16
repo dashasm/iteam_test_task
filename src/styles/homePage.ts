@@ -56,3 +56,8 @@ export const NotFound = styled.div`
   color: white;
   font-size: 30px;
 `;
+
+export const NotFoundGames = styled.div`
+font-size: 20px;
+color: red;
+`

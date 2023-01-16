@@ -34,6 +34,7 @@ import arrowDown from "../images/arrowDown.svg";
 import arrowUp from "../images/arrowUp.svg";
 import price from "../images/price.svg";
 import publishDate from "../images/publishDate.svg";
+import { FetchedStatus, FilterOrder, FilterValue } from "../types/type";
 
 const Header: React.FC = () => {
   const [isVisibleOrderDropdown, setIsVisibleOrderDropdown] = useState(true);
@@ -56,19 +57,24 @@ const Header: React.FC = () => {
           value={title}
           onKeyDown={(e) => {
             if (e.code === "Enter") {
-              dispatch(updateFetchedStatus("loading"));
+              dispatch(updateFetchedStatus(FetchedStatus.LOADING));
               getGames(title)
                 .then((res) => {
-                  dispatch(updateFetchedStatus("idle"));
-                  dispatch(setGames(res));
+                  if (res.length) {
+                    dispatch(updateFetchedStatus(FetchedStatus.IDLE));
+                    dispatch(setGames(res));
+                  } else {
+                    dispatch(updateFetchedStatus(FetchedStatus.NOGAMES));
+                  }
                 })
                 .catch(() => {
-                  dispatch(updateFetchedStatus("error"));
+                  dispatch(updateFetchedStatus(FetchedStatus.ERROR));
                 });
             }
           }}
           onChange={(e) => {
             setTitle(e.target.value);
+            dispatch(updateFetchedStatus(FetchedStatus.IDLE));
           }}
         />
         <SearchIcon>
@@ -94,7 +100,7 @@ const Header: React.FC = () => {
           <FlexContainer hover="#696666">
             <SortItem
               onClick={() => {
-                dispatch(updateSortOrder("asc"));
+                dispatch(updateSortOrder(FilterOrder.ASC));
                 setIsVisibleOrderDropdown(true);
               }}
             >
@@ -105,7 +111,7 @@ const Header: React.FC = () => {
           <FlexContainer hover="#696666">
             <SortItem
               onClick={() => {
-                dispatch(updateSortOrder("desc"));
+                dispatch(updateSortOrder(FilterOrder.DESC));
                 setIsVisibleOrderDropdown(true);
               }}
             >
@@ -144,7 +150,7 @@ const Header: React.FC = () => {
               direction="row"
               hover="#696666"
               onClick={() => {
-                dispatch(updateSorting("Price"));
+                dispatch(updateSorting(FilterValue.PRICE));
                 setIsVisibleSortDropdown(true);
               }}
             >
@@ -157,7 +163,7 @@ const Header: React.FC = () => {
               direction="row"
               hover="#696666"
               onClick={() => {
-                dispatch(updateSorting("Publish Date"));
+                dispatch(updateSorting(FilterValue.PUBLISHDATE));
                 setIsVisibleSortDropdown(true);
               }}
             >

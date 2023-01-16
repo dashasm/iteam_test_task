@@ -10,7 +10,7 @@ const headers = {
 
 export async function getGames(
   query: string
-): Promise<GameData | ResponseError> {
+): Promise<GameData[]> {
   return await fetch(`${API_URL}/search/${query}/page/1`, {
     headers,
   })

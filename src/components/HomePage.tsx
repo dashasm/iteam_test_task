@@ -12,10 +12,12 @@ import {
   GridContainer,
   Loading,
   LoadingWrapper,
+  NotFoundGames,
 } from "../styles/homePage";
 import { Card } from "./Card";
 import { useLocation } from "react-router-dom";
 import { Pagination } from "./Pagination";
+import { FetchedStatus, FilterOrder, FilterValue } from "../types/type";
 
 const countItemsPerPage = 4;
 
@@ -44,7 +46,7 @@ export const HomePage: React.FC = () => {
 
     newGames.map((game) => {
       const item = game.price.trim();
-      if (moment(game.released, 'DD MMM, YYYY').isValid()) {
+      if (moment(game.released, "DD MMM, YYYY").isValid()) {
         gamesWithDate.push(game);
       } else {
         gamesWithoutDate.push(game);
@@ -58,10 +60,10 @@ export const HomePage: React.FC = () => {
     });
 
     const sortedByDate = gamesWithDate.sort((a, b) => {
-      const aDate = moment(a.released, 'DD MMM, YYYY');
-      const bDate = moment(b.released, 'DD MMM, YYYY');
+      const aDate = moment(a.released, "DD MMM, YYYY");
+      const bDate = moment(b.released, "DD MMM, YYYY");
 
-      if (sortOrder === "asc") {
+      if (sortOrder === FilterOrder.ASC) {
         return aDate.diff(bDate);
       }
 
@@ -72,26 +74,30 @@ export const HomePage: React.FC = () => {
       const aPrice = a.price.trim().slice(0, -1).replace(/,/, ".");
       const bPrice = b.price.trim().slice(0, -1).replace(/,/, ".");
 
-      if (sortOrder === "asc") {
+      if (sortOrder === FilterOrder.ASC) {
         return Number(aPrice) - Number(bPrice);
       }
       return Number(bPrice) - Number(aPrice);
     });
 
-    return sorting === "Price"
+    return sorting === FilterValue.PRICE
       ? [...sortedByPrice, ...freeGames]
       : [...sortedByDate, ...gamesWithoutDate];
   }, [sortOrder, sorting, newGames]);
 
   const renderContent = () => {
     switch (fetchedStatus) {
-      case "idle":
+      case FetchedStatus.IDLE:
         return filteredGames()
           .slice(fromItem - 1, toItem)
           .map((elem, i) => {
             return <Card key={i} game={elem} />;
           });
-      case "loading":
+      case FetchedStatus.NOGAMES:
+        return (
+          <NotFoundGames>No games with this name were found</NotFoundGames>
+        );
+      case FetchedStatus.LOADING:
         return (
           <LoadingWrapper>
             <Loading>Loading</Loading>
@@ -100,7 +106,7 @@ export const HomePage: React.FC = () => {
             <Dot delay="0.2s" />
           </LoadingWrapper>
         );
-      case "error":
+      case FetchedStatus.ERROR:
         return "Error";
     }
   };
@@ -109,13 +115,14 @@ export const HomePage: React.FC = () => {
     <>
       <GridContainer>{renderContent()}</GridContainer>
 
-      {newGames.length > countItemsPerPage && fetchedStatus === "idle" && (
-        <Pagination
-          perPage={countItemsPerPage}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
-        />
-      )}
+      {newGames.length > countItemsPerPage &&
+        fetchedStatus === FetchedStatus.IDLE && (
+          <Pagination
+            perPage={countItemsPerPage}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+          />
+        )}
     </>
   );
 };

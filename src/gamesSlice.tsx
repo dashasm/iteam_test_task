@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { createSlice } from "@reduxjs/toolkit";
+import { FetchedStatus, FilterOrder, FilterValue } from "./types/type";
 
 export interface IGame {
   appId: string;
@@ -22,11 +23,11 @@ export interface GameState {
 
 const initialState: GameState = {
   games: [],
-  sorting: "Price",
-  sortOrder: "asc",
+  sorting: FilterValue.PRICE,
+  sortOrder: FilterOrder.ASC,
   likedList: [],
   selectedGame: null,
-  fetchedStatus: "idle",
+  fetchedStatus: FetchedStatus.IDLE,
 };
 
 export const gameSlice = createSlice({
