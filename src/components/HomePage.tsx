@@ -44,7 +44,7 @@ export const HomePage: React.FC = () => {
 
     newGames.map((game) => {
       const item = game.price.trim();
-      if (moment(game.released).isValid()) {
+      if (moment(game.released, 'DD MMM, YYYY').isValid()) {
         gamesWithDate.push(game);
       } else {
         gamesWithoutDate.push(game);
@@ -60,7 +60,7 @@ export const HomePage: React.FC = () => {
     const sortedByDate = gamesWithDate.sort((a, b) => {
       const aDate = moment(a.released, 'DD MMM, YYYY');
       const bDate = moment(b.released, 'DD MMM, YYYY');
-      
+
       if (sortOrder === "asc") {
         return aDate.diff(bDate);
       }
