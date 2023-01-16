@@ -128,6 +128,7 @@ const Header: React.FC = () => {
               <StyledSVG
                 color={"black"}
                 src={isVisibleSortDropdown ? arrowUp : arrowDown}
+                size={"18px"}
               />
             </FlexContainer>
           </SortItem>
@@ -149,7 +150,7 @@ const Header: React.FC = () => {
             >
               <SortItem>Price</SortItem>
 
-              <StyledSVG color={"black"} src={price} />
+              <StyledSVG color={"black"} src={price} size="18px" />
             </FlexContainer>
             <FlexContainer
               content="space-between"
@@ -162,7 +163,7 @@ const Header: React.FC = () => {
             >
               <SortItem>Publish Date</SortItem>
 
-              <StyledSVG color={"black"} src={publishDate} />
+              <StyledSVG color={"black"} src={publishDate} size="18px" />
             </FlexContainer>
           </Dropdown>
         </ContainerCustom>

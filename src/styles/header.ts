@@ -7,6 +7,7 @@ interface SVGProps {
   width?: string;
   hover?: string;
   transform?: string;
+  size?: string;
 }
 
 export const StyledSVG = styled(SVG)<SVGProps>`
@@ -23,6 +24,11 @@ export const StyledSVG = styled(SVG)<SVGProps>`
     & path {
       fill: ${({ hover }) => hover};
     }
+  }
+
+  @media (max-width: 1100px) and (min-width: 655px) {
+    width: ${({ size }) => size};
+    height: ${({ size }) => size};
   }
 `;
 
@@ -50,6 +56,7 @@ export const FlexContainer = styled.div<FlexContainerProps>`
 export const Theme = styled.div`
   background: #171a21;
 `;
+
 export const Flex = styled.div`
   display: flex;
   align-items: center;
@@ -71,15 +78,28 @@ export const HeaderContainer = styled(Flex)`
       "select select filter";
     column-gap: 20px;
   }
+
+  @media (max-width: 1100px) and (min-width: 655px) {
+    display: grid;
+    grid-template-columns: 20% 1fr 8% 15% 20%;
+
+    grid-gap: 15px;
+    padding: 0 80px;
+  }
 `;
 
 export const Logo = styled.img`
-  width: 150px;
   height: 35px;
-  margin: 15px;
+  width: 100%;
+  margin: 0;
 
   @media (max-width: 650px) {
-    margin: 0;
+    height: 60px;
+  }
+
+  @media (min-width: 1100px) {
+    margin: 15px;
+    width: 150px;
   }
 `;
 
@@ -121,6 +141,12 @@ export const Search = styled.input.attrs({
   @media (max-width: 650px) {
     min-width: 0;
   }
+
+  @media (max-width: 1100px) and (min-width: 655px) {
+    max-width: 100%;
+    min-width: 0;
+    gap: 30px;
+  }
 `;
 
 export const SearchIcon = styled.div`
@@ -133,15 +159,16 @@ export const SearchIcon = styled.div`
 `;
 
 export const SortOrder = styled(Flex)`
-  width: 37px;
   height: 36px;
 
   background: #837f7f;
   border-radius: 10px;
   cursor: pointer;
 
-  @media (max-width: 650px) {
-    width: 100%;
+  width: 100%;
+
+  @media (min-width: 1100px) {
+    width: 37px;
   }
 `;
 
@@ -165,7 +192,7 @@ export const Dropdown = styled.div<DropdownProps>`
 
   transition: opacity 0.3s ease-out;
 
-  @media (max-width: 650px) {
+  @media (max-width: 1100px) {
     rigth: 0;
     width: ${({ widthOnMobile }) => widthOnMobile};
   }
@@ -195,6 +222,10 @@ export const Menu = styled(Flex)`
     gap: 15px;
     width: 100%;
   }
+  @media (max-width: 1100px) and (min-width: 655px) {
+    gap: 5px;
+    width: 100%;
+  }
 `;
 
 interface MenuItemProps {
@@ -208,6 +239,14 @@ export const MenuItem = styled.div<MenuItemProps>`
 
   color: ${({ color }) => color};
   padding: 10px;
+
+  @media (max-width: 1100px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 1100px) and (min-width: 655px) {
+    padding: 5px;
+  }
 `;
 
 export const ContainerCustom = styled.div`
@@ -216,6 +255,10 @@ export const ContainerCustom = styled.div`
 
   background: #837f7f;
   border-radius: 10px;
+
+  @media (max-width: 1100px) {
+    min-width: 0;
+  }
 `;
 
 export const Text = styled.div`
